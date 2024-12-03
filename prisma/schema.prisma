@@ -9,11 +9,29 @@ datasource db {
 
 
 model User {
-  id            Int       @id @default(autoincrement())
-  email         String    @unique
-  hashedPassword      String 
-
-  @@map(name: "users")
+  id               Int      @id @default(autoincrement())
+  username            String   @unique
+  hashedPassword   String?
+  accounts         Account[]
+  sessions         Session[]
 }
+
+model Account {
+  id                 Int      @id @default(autoincrement())
+  userId             Int
+  provider           String
+  providerAccountId  String
+  user               User     @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  expires    DateTime
+  user       User     @relation(fields: [userId], references: [id])
+}
+
 
 

@@ -5,13 +5,14 @@ import { PrismaClient } from "@prisma/client"
 import { NextResponse } from "next/server"
 import { z } from "zod"
 import { sign } from "crypto";
+import { signIn } from "next-auth/react";
 
 const prisma = new PrismaClient();
 
 const signUpSchema = z.object({
-    email: z.string({
-        required_error: "Email is required"
-    }).email(),
+    username: z.string({
+        required_error: "Username is required"
+    }),
     password: z.string({
         required_error: "Password is required"
     }).min(8).max(50),
@@ -28,7 +29,7 @@ const signUpSchema = z.object({
 export async function POST(request) {
 
     const body = await request.json();
-    const { email, password, confirmPassword } = body;
+    const { username, password, confirmPassword } = body;
 
     const resultValidation = signUpSchema.safeParse(body)
 
@@ -36,13 +37,13 @@ export async function POST(request) {
         return NextResponse.json(resultValidation.error)
     }
 
-    if (!email || !password) {
-        return new NextResponse("Missing email or password", { status: 400 })
+    if (!username || !password) {
+        return new NextResponse("Missing username or password", { status: 400 })
     }
 
     const exist = await prisma.user.findUnique({
         where: {
-            email: email,
+            username: username,
         }
     })
 
@@ -56,7 +57,7 @@ export async function POST(request) {
 
     const user = await prisma.user.create({
         data: {
-            email,
+            username,
             hashedPassword
         }
     })

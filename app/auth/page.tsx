@@ -1,5 +1,6 @@
 'use client';
 
+import Navbar from "@/components/ui/navbar";
 import { useSession } from "next-auth/react";
 
 export default function AuthPage() {
@@ -17,12 +18,23 @@ export default function AuthPage() {
     // Mostrar un saludo si la sesión está disponible
     return (
         <>
+
+            <Navbar />
+            
+            
+            
+            
             <p>Auth page</p>
             {session ? (
                 <p>Hi! {session.user?.email}</p>
             ) : (
                 <p>Session not found</p> // Maneja el caso donde 'session' es undefined
             )}
+
+            
+
+
+
         </>
     );
 }

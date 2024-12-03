@@ -6,14 +6,16 @@ import {PrismaClient} from "@prisma/client"
 import { debug } from "console"
 import { NextResponse } from "next/server"
 import {z} from "zod"
+import GoogleProvider from "next-auth/providers/google";
+
 
 const prisma = new PrismaClient();
 
 
 const logInSchema = z.object({
-    email: z.string({
-        required_error: "Email is required"
-    }).email(),
+    username: z.string({
+        required_error: "Username is required"
+    }),
     password: z.string({
         required_error: "Password is required"
     }).min(8).max(50)
@@ -21,26 +23,26 @@ const logInSchema = z.object({
 
 
 export const authOptions = {
-    adapter: PrismaAdapter(prisma),
+   // adapter: PrismaAdapter(prisma),
     providers: [
         CredentialsProvider({
             name: "credentials",
             credentials: {
-                email: { label: "email", type: "text", placeholder: "example@gmail.com" },
-                password: { label: "password", type: "password", placeholder: "password" }
+                username: { label: "username", type: "text", placeholder: "username-example" },
+                password: { label: "password", type: "password" }
             },
             async authorize(credentials) {
-                // Verifica que email y password estén presentes
+                // Verifica que username y password estén presentes
                 
                 const resultValidation = logInSchema.safeParse(credentials)
 
-                if(!resultValidation){
+                if(!resultValidation.success){
                     return null
                 }
 
                 const user = await prisma.user.findUnique({
                     where: {
-                        email: credentials.email
+                        username: credentials.username
                     }
                 });
 
@@ -57,7 +59,15 @@ export const authOptions = {
 
                 return user;
             }
-        })
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+          })
+        
+      
+
+        
     ],
     session: {
         strategy: "jwt",
