@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Google Auth Login Component
 
-## Getting Started
+Este proyecto es una práctica para desarrollar un componente de inicio de sesión con Google Auth utilizando Next.js y la biblioteca `next-auth`. El objetivo es aprender a integrar servicios de autenticación de Google en una aplicación.
 
-First, run the development server:
+## Características
+- Autenticación con Google mediante `next-auth`.
+- Gestor de sesiones para controlar el estado de autenticación del usuario.
+- Interfaz sencilla para probar el inicio y cierre de sesión.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Capturas de Pantalla
+### Pantalla de login
+![image](https://github.com/user-attachments/assets/e3d443f8-64cd-4736-baf3-b85ed4491ac0)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Pantalla de signup
+![image](https://github.com/user-attachments/assets/26f93829-2a70-49d8-aa9a-08d276c76fc9)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Instalación
 
-## Learn More
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/tu_usuario/tu_repositorio.git
+   cd tu_repositorio
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. Instala las dependencias:
+   ```bash
+   npm install
+   # o
+   yarn install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Configura las credenciales de Google Auth:
+   - Ve a [Google Cloud Console](https://console.cloud.google.com/).
+   - Crea un nuevo proyecto o usa uno existente.
+   - Habilita la API de OAuth 2.0.
+   - Configura las credenciales con un tipo de aplicación "Web Application".
+   - Añade `http://localhost:3000` como origen autorizado y `http://localhost:3000/api/auth/callback/google` como URI de redirección.
+   - Descarga el archivo JSON de las credenciales y copia el ID de cliente y el secreto.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. Crea un archivo `.env.local` en la raíz del proyecto con el siguiente contenido:
+   ```env
+   NEXTAUTH_URL=http://localhost:3000
+   GOOGLE_CLIENT_ID=tu_google_client_id
+   GOOGLE_CLIENT_SECRET=tu_google_client_secret
+   ```
+   y demas datos de la base de datos
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
