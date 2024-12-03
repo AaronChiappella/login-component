@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main>
       <Navbar></Navbar>
-     
+      <p className="text-center text-2xl pt-10"> You are currently not authenticated</p>
     </main>
   );
 }
