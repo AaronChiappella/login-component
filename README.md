@@ -8,10 +8,10 @@ Este proyecto es una práctica para desarrollar un componente de inicio de sesi�
 - Interfaz sencilla para probar el inicio y cierre de sesión.
 
 ## Capturas de Pantalla
-### Interfaz Principal
+### Pantalla de login
 ![image](https://github.com/user-attachments/assets/26f93829-2a70-49d8-aa9a-08d276c76fc9)
 
-### Inicio de Sesión Exitoso
+### Pantalla de signup
 ![image](https://github.com/user-attachments/assets/e3d443f8-64cd-4736-baf3-b85ed4491ac0)
 
 ## Instalación
